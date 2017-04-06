@@ -1,1 +1,1 @@
-# AudioProyArdu \n\nPrograma encargado de muestrear una señal analógica, aplicarle filtros digitales, y mandar las muestras vía USB serie.
+Proyecto Arduino encargado de muestrear señales y aplicarles filtros digitales, enviando las muestras vía USB serial.

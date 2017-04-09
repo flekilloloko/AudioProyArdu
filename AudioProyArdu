@@ -1,13 +1,13 @@
 #define ARM_MATH_CM3
 #include <arm_math.h>
-//#include <arm_const_structs.h>
 
-const int pinLed = 13;
-const int pinAnalogico = A0;
+
+
+
 
 #define TEST_LENGTH_SAMPLES 2048
 
-static q31_t testOutput[TEST_LENGTH_SAMPLES/2];
+
 static q31_t salida[TEST_LENGTH_SAMPLES/2];
 
 
@@ -21,8 +21,8 @@ int8_t  posShift = 1;
 
 
 q31_t muestreo[TEST_LENGTH_SAMPLES] = {0};
-q31_t sFiltrada[TEST_LENGTH_SAMPLES/2] = {0};
-q31_t sNoFiltrada[TEST_LENGTH_SAMPLES/2] = {0};
+
+
 q31_t estados[4];
 q31_t coef[6];
 
@@ -39,18 +39,18 @@ void setup()
   //adc_setup ();
 }
 
-double ventaneo(int n){
-  double resultado;
-  resultado = 0.54 - 0.46 * cos(2*PI*n/(fftSize-1));   //Hamming window
-  return resultado;
-}
 
-void llenar_muestras(q31_t *arreglo){
-  for(int i=0 ; i<fftSize*2 ; i+=2){
-    arreglo[i] = (q31_t) ((cos(PI*2*1000*i*0.00002) + cos(PI*2*7000*i*0.00002 )) * ventaneo(i/2) * (1<<29)); //50 KHz de muestreo
-    arreglo[i+1] = 0;
-  }
-}
+
+
+
+
+
+
+
+ 
+
+  
+
 
 void llenar_coef(q31_t *arreglo){
   arreglo[0] = (0.644044808751193 / (1<<1)) * (1<<31);  // b0
@@ -68,16 +68,16 @@ void loop() {
   
   //reg = REG_ADC_MR;
   
-  //rellenar_muestras(muestreo);
-  //corrimiento = 29;
-  llenar_muestras(muestreo);
+
+
+
   llenar_coef(coef);
   
-  arm_status status;
-  status = ARM_MATH_SUCCESS; 
-  arm_rfft_instance_q31 S;
+
+
+
   //tiempo = millis();
-  arm_rfft_init_q31(&S, fftSize, ifftFlag, doBitReverse);
+
   
 
   arm_biquad_cascade_df1_init_q31(&F, 1, coef, estados, posShift);
@@ -85,7 +85,7 @@ void loop() {
   //tiempo -= millis();
   
   /*for(int i = 1; i<1024; i++) {
-      Serial.print(int(salida[i]/(1<<16)));
+      Serial.print(salida[i]);
       Serial.print(",");
       
       Serial.flush();
@@ -94,7 +94,7 @@ void loop() {
  
   // static uint8_t pwmCnt=10;
   //analogWrite(pwm,pwmCnt);
-  //pwmCnt+=30;
+
   // configure Peripheral DMA
   /*PDC_ADC->PERIPH_RPR = (uint32_t) buf; // address of buffer
   PDC_ADC->PERIPH_RCR = BUFFER_SIZE; 
@@ -103,19 +103,19 @@ void loop() {
                        //while((adc_get_status(ADC) & ADC_ISR_ENDRX) == 0)
                           //{};
   //tiempo = millis() - tiempo;
-  for(int i=0 ; i<fftSize ; i++)
-    sFiltrada[i] = (q31_t) ((cos(1000*i*0.00002) + cos(7000*i*0.00002)) * ventaneo(i) * (1<<28)); //50 KHz de muestreo
+
+
     
   
   //arm_biquad_cascade_df1_fast_q31(&F, sNoFiltrada, sFiltrada, fftSize);
-  for(int i=0 ; i<fftSize*2 ; i+=2)
-    muestreo[i] = sFiltrada[(int)(i/2)]; //50 KHz de muestreo
 
- arm_rfft_q31(&S, muestreo, testOutput); //testInput_f32_10khz
- arm_cmplx_mag_q31(testOutput, salida, fftSize);  
+
+
+
+
    Serial.print("_");
-  for(int i = 1; i<1024; i++) {
-      Serial.print(int(salida[i]/(1<<13)));
+  for(int i = 1; i<e; i++) {
+      Serial.print(salida[i]);
       Serial.print(",");
       
       Serial.flush();
@@ -151,13 +151,3 @@ void adc_setup(){
   adc_start( ADC );
   //tiempo = millis();
 }
-
-void rellenar_muestras(q31_t *muestre){
-  
-  for(int i=0 ; i<fftSize*2 ; i+=2){
-    muestre[i] = (q31_t) (cos(PI*2*2000*i*0.00002) * (1<<corrimiento)); //50 KHz de muestreo
-    muestre[i+1] = 0;
-  }
-  //return muestre;
-}*/
-

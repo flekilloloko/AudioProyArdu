@@ -24,7 +24,7 @@ void setup()
 
 void llenar_muestras(q31_t *arreglo){
   for(int i=0 ; i<fftSize; i++){
-    arreglo[i] = (q31_t) ((cos(PI*2*1000*i*(1/50000)) + cos(PI*2*7000*i*0.00002 )) * (1<<29)); //50 KHz de muestreo
+    arreglo[i] = (q31_t) ((cos(PI*2*1000*i*(1/50000)) + cos(PI*2*7000*i*(1/50000) )) * (1<<29)); //50 KHz de muestreo
   }
 }
 

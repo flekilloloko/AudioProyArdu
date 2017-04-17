@@ -18,16 +18,45 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #include <stdlib.h> // For malloc/free
 #include <string.h> // For memset
 
-q15_t fil_iir_q15_coeficientes[12];
+//q15_t fil_iir_q15_coeficientes[12];
 int fil_iir_q15_grado;
 int fil_iir_q15_posCorr;
 
+void llenar_coeficientes(q15_t * coef, float f0, float fmues, short grado, string * tipo){
+	double w0 = 2*M_PI*f0/fmues;
+	double alpha = cos(w0)/2;
+	double b0, b1, b2, a1, a2;
+	switch(tipo){
+		case: "FPB"
+			a0 = 1 + alpha;
+			a1 = 2*cos(w0)/a0;
+			a2 = (alpha-1)/a0;
+			b0 = (1 - cos(wo)) / (a0*2);
+			b1 = (1-cos(w0))/a0;
+			b2 = (1-cos(w0))/(a0*2);			
+		break;
+		case: "FPA"
+			a0 = 1 + alpha;
+			a1 = 2*cos(w0)/a0;
+			a2 = (alpha -1)/a0;
+			b0 = (1 + cos(w0))/(2*a0);
+			b1 = -(1 + cos(w0))/a0;
+			b2 = (1 + cos(w0))/(2*a0);
+		break;
+	}
+	
+	
+	if(grado == 2){
+		b2 = 0.0; a2 = 0.0;
+	}
+}
 
-fil_iir_q15Type *fil_iir_q15_create( string* tipo, float f0, short grado )
+fil_iir_q15Type *fil_iir_q15_crear( string* tipo, float f0, float fmues, short grado )
 {
+	q15_t fil_iir_q15_coeficientes[12];
 	fil_iir_q15Type *result = (fil_iir_q15Type *)malloc( sizeof( fil_iir_q15Type ) );	// Allocate memory for the object
 	fil_iir_q15_grado = grado;
-	
+	llenar_coeficientes(fil_iir_q15_coeficientes, f0, fmues, grado, tipo);
 	
 	
 	fil_iir_q15_inic( result );											// inicialize it

@@ -29,18 +29,22 @@ extern q15_t fil_iir_q15_coeficientes[12];
 extern int fil_iir_q15_grado;
 extern int fil_iir_q15_posCorr;
 
+
+
 typedef struct
 {
 	arm_biquad_casd_df1_inst_q15 instancia;
 	q15_t estados[8];
 	q15_t salida;
+	q15_t coeficientes[12];
 } fil_iir_q15Type;
 
 
-fil_iir_q15Type *fil_iir_q15_create( void );
+fil_iir_q15Type *fil_iir_q15_crear( void );
 void fil_iir_q15_destruir( fil_iir_q15Type *puntObj );
  void fil_iir_q15_inic( fil_iir_q15Type * puntEste );
  void fil_iir_q15_reiniciar( fil_iir_q15Type * puntEste );
+ void llenar_coeficientes(q15_t * coef, float f0, float fmues, short grado, string * tipo);
 #define fil_iir_q15_writeInput( puntEste, input )  \
 	arm_biquad_cascade_df1_q15( &puntEste->instancia, &input, &puntEste->salida, 1 );
 

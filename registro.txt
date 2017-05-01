@@ -1,1 +1,0 @@
-la trafo en float toma 15uSec, 66.66KHz

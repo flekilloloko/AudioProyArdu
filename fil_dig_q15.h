@@ -1,13 +1,13 @@
 /******************************* SOURCE LICENSE *********************************
-Copyright (c) 2015 MicroModeler.
+  Copyright (c) 2015 MicroModeler.
 
-A non-exclusive, nontransferable, perpetual, royalty-free license is granted to the Licensee to 
-use the following Information for academic, non-profit, or government-sponsored research purposes.
-Use of the following Information under this License is restricted to NON-COMMERCIAL PURPOSES ONLY.
-Commercial use of the following Information requires a separately executed written license agreement.
+  A non-exclusive, nontransferable, perpetual, royalty-free license is granted to the Licensee to
+  use the following Information for academic, non-profit, or government-sponsored research purposes.
+  Use of the following Information under this License is restricted to NON-COMMERCIAL PURPOSES ONLY.
+  Commercial use of the following Information requires a separately executed written license agreement.
 
-This Information is distributed WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  This Information is distributed WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 ******************************* END OF LICENSE *********************************/
 
@@ -28,31 +28,36 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 extern q15_t fil_dig_q15_coefficients[6];
 static const int fil_dig_q15_numStages = 1;
 static const int fil_dig_q15_postShift = 1;
+static const int frecMuestreo = 50000;
+static const int Q = 1;
 
 typedef struct
 {
-	arm_biquad_casd_df1_inst_q15 instance;
-	q15_t state[4];
-	q15_t output;
+  arm_biquad_casd_df1_inst_q15 instance;
+  q15_t state[4];
+  q15_t output;
+  q15_t fil_dig_q15_coefficients[6];
 } fil_dig_q15Type;
 
 
 fil_dig_q15Type *fil_dig_q15_create( void );
+void llenar_muestras(q15_t *arreglo);
+void fil_dig_q15_llenarCoef( fil_dig_q15Type *pThis, float frecCorte);
 void fil_dig_q15_destroy( fil_dig_q15Type *pObject );
- void fil_dig_q15_init( fil_dig_q15Type * pThis );
- void fil_dig_q15_reset( fil_dig_q15Type * pThis );
+void fil_dig_q15_init( fil_dig_q15Type * pThis );
+void fil_dig_q15_reset( fil_dig_q15Type * pThis );
 #define fil_dig_q15_writeInput( pThis, input )  \
-	arm_biquad_cascade_df1_q15( &pThis->instance, &input, &pThis->output, 1 );
+  arm_biquad_cascade_df1_q15( &pThis->instance, &input, &pThis->output, 1 );
 
 #define fil_dig_q15_readOutput( pThis )  \
-	pThis->output
+  pThis->output
 
 
- int fil_dig_q15_filterBlock( fil_dig_q15Type * pThis, short * pInput, short * pOutput, unsigned int count );
+int fil_dig_q15_filterBlock( fil_dig_q15Type * pThis, short * pInput, short * pOutput, unsigned int count );
 #define fil_dig_q15_outputToFloat( output )  \
-	(( (1.0f/16384) * (output) ))
+  (( (1.0f/16384) * (output) ))
 
 #define fil_dig_q15_inputFromFloat( input )  \
-	((short)(32768f * (input)))
+  ((short)(32768f * (input)))
 
 #endif // FIL_DIG_Q15_H_

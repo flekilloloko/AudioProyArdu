@@ -42,7 +42,7 @@ typedef struct
 
 fil_dig_q15Type *fil_dig_q15_create( void );
 void llenar_muestras(q15_t *arreglo);
-void fil_dig_q15_llenarCoef( fil_dig_q15Type *pThis, float frecCorte);
+void fil_dig_q15_llenarCoef( fil_dig_q15Type *pThis, float frecCorte, char tipo);
 void fil_dig_q15_destroy( fil_dig_q15Type *pObject );
 void fil_dig_q15_init( fil_dig_q15Type * pThis );
 void fil_dig_q15_reset( fil_dig_q15Type * pThis );

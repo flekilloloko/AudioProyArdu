@@ -15,7 +15,7 @@ void setup()
 void loop() {
   llenar_muestras(muestreo);
 
-  fil_dig_q15_llenarCoef(fil_1, 5000);
+  fil_dig_q15_llenarCoef(fil_1, 5000, 'A');
   
   Serial.print("_");
   for(int i = 0; i<1024; i++) {

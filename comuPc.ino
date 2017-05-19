@@ -11,7 +11,8 @@ volatile unsigned long lasttime;
 volatile unsigned long now, lapso;
 uint32_t rc;
 short frecCorte = 0;
-int recepcion;
+int recepcion, tamano;
+byte cadenaRx[20];
 //int frecRecepcion;
 
 
@@ -20,24 +21,28 @@ int FREQ_Hz = 60;
 void TC3_Handler(){
     int i = 0, n = 0;
     frecCorte = 0;
+    for(i=0;i<20;i++) cadenaRx[i] = 0;
     
     TC_GetStatus(TC1, 0);
     if(Serial.available()>1){
       recepcion = Serial.read();      //recibo el primer byte
-      while(recepcion != ',')
+      while(recepcion != ',' && Serial.available()>0 )
         recepcion = Serial.read();    //busco la primera coma
       recepcion = Serial.read();    //capturo el primer caracter de la frecuencia
       while(recepcion >= '0' && recepcion <= '9' && Serial.available()>0){                                        // ! tener en cuenta que se reciba el numero entero
-        frecCorte += (recepcion - 48) * pow(10,n);
+        cadenaRx[n] = recepcion;
+        //frecCorte += (recepcion - 48) * pow(10,n);
         n++;
         recepcion = Serial.read();
         
       }
-       if(frecCorte>0){
+      for(i=0;i<n;i++)
+        frecCorte += (cadenaRx[n-i-1] - 48) * pow(10,i);
+       if(frecCorte>0 && recepcion == ','){
         Serial.print(frecCorte);
         Serial.print(", ");    
       }
-      Serial.print("Interuroweijrp");
+      //Serial.print(cadenaRx, BYTE);
       /*
       while(recepcion != ',' && Serial.available()>0)       //busco la primera coma en el string
         recepcion = Serial.read();
@@ -108,3 +113,4 @@ void loop() {
     //Serial.print(lapso);
     //delay(1000);
 }
+

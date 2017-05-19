@@ -23,6 +23,22 @@ void TC3_Handler(){
     
     TC_GetStatus(TC1, 0);
     if(Serial.available()>1){
+      recepcion = Serial.read();      //recibo el primer byte
+      while(recepcion != ',')
+        recepcion = Serial.read();    //busco la primera coma
+      recepcion = Serial.read();    //capturo el primer caracter de la frecuencia
+      while(recepcion >= '0' && recepcion <= '9' && Serial.available()>0){                                        // ! tener en cuenta que se reciba el numero entero
+        frecCorte += (recepcion - 48) * pow(10,n);
+        n++;
+        recepcion = Serial.read();
+        
+      }
+       if(frecCorte>0){
+        Serial.print(frecCorte);
+        Serial.print(", ");    
+      }
+      Serial.print("Interuroweijrp");
+      /*
       while(recepcion != ',' && Serial.available()>0)       //busco la primera coma en el string
         recepcion = Serial.read();
       if (Serial.available()>0) 
@@ -30,7 +46,7 @@ void TC3_Handler(){
                       //tomo el primer numero
       /*while(recepcion <= '0' && recepcion >= '9')
         recepcion = Serial.read();
-      recepcion=Serial.read();*/
+      recepcion=Serial.read();*//*
       while(recepcion >= '0' && recepcion <= '9' && Serial.available()>0){
           
           frecCorte += (recepcion - 48) * pow(10,n);
@@ -42,7 +58,7 @@ void TC3_Handler(){
       if(frecCorte>0 && recepcion == ','){
         Serial.print(frecCorte);
         Serial.print(", ");    
-      }
+      }*/
     }
     
     

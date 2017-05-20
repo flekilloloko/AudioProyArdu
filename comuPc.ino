@@ -39,10 +39,11 @@ void TC3_Handler(){
       }
       for(i=0;i<n;i++)
         frecCorte += (cadenaRx[n-i-1] - 48) * pow(10,i);
-       if(frecCorte>0 && recepcion == 'F'){
+      if(frecCorte>0 && recepcion == 'F'){
         Serial.print("FA"); 
         Serial.print(frecCorte);
-        Serial.print("FA");    
+        Serial.print("AF");    
+        //Serial.print("_");  
       }
       //Serial.print(cadenaRx, BYTE);
       /*

@@ -26,9 +26,10 @@ void TC3_Handler(){
     TC_GetStatus(TC1, 0);
     if(Serial.available()>1){
       recepcion = Serial.read();      //recibo el primer byte
-      while(recepcion != ',' && Serial.available()>0 )
+      while(recepcion != 'F' && Serial.available()>0 )
         recepcion = Serial.read();    //busco la primera coma
       recepcion = Serial.read();    //capturo el primer caracter de la frecuencia
+      recepcion = Serial.read();
       while(recepcion >= '0' && recepcion <= '9' && Serial.available()>0){                                        // ! tener en cuenta que se reciba el numero entero
         cadenaRx[n] = recepcion;
         //frecCorte += (recepcion - 48) * pow(10,n);
@@ -38,9 +39,10 @@ void TC3_Handler(){
       }
       for(i=0;i<n;i++)
         frecCorte += (cadenaRx[n-i-1] - 48) * pow(10,i);
-       if(frecCorte>0 && recepcion == ','){
+       if(frecCorte>0 && recepcion == 'F'){
+        Serial.print("FA"); 
         Serial.print(frecCorte);
-        Serial.print(", ");    
+        Serial.print("FA");    
       }
       //Serial.print(cadenaRx, BYTE);
       /*

@@ -1,0 +1,26 @@
+Arduino
+	ADC
+	DAC
+	DMA
+	Filtrado
+	
+Qt	
+	dos graficos
+	presentacion
+	casillas y sliders
+	
+Plaqueta
+
+Hecho:
+	QT un grafico
+	
+	
+Plan:
+	ARDU filtrado que ande ->
+	QT ajustar parametros del mismo ->
+	QT casillas y sliders ->
+	presentacion ->
+	ADC y DAC ->
+	DMA->
+	dos graficos + presentacion
+	
